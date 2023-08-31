@@ -1,7 +1,7 @@
-package com.pauta.votacao.service;
+package com.schedule.vote.service;
 
-import com.pauta.votacao.model.Usuario;
-import com.pauta.votacao.repository.UserRepository;
+import com.schedule.vote.model.User;
+import com.schedule.vote.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<Usuario> buscarUsuario(Long id) {
+    public Optional<User> getUser(Long id) {
     return userRepository.findById(id);
     }
 }
