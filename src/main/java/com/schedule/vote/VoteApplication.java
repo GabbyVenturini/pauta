@@ -1,13 +1,13 @@
-package com.pauta.votacao;
+package com.schedule.vote;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VotacaoApplication {
+public class VoteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VotacaoApplication.class, args);
+		SpringApplication.run(VoteApplication.class, args);
 	}
 
 }

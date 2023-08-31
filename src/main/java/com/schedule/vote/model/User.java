@@ -1,4 +1,4 @@
-package com.pauta.votacao.model;
+package com.schedule.vote.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -6,11 +6,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Usuario {
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+    private String name;
 
     public Long getId() {
         return id;
@@ -20,12 +21,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
