@@ -1,11 +1,9 @@
 package com.schedule.vote.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "USUARIO")
 public class User {
 
     @Id
@@ -29,6 +27,3 @@ public class User {
         this.name = name;
     }
 }
-
-//Todo: adicionar as anotacoes @Id e @GenerateValue para dizer que nosso atributo vai ser um identificador unico e gerado automaticamente na hora da criacao.
-//Todo: adicionar anotacao @Entity para dizer que a classe/entidade é uma tabela no banco de dados
