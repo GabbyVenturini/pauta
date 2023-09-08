@@ -3,10 +3,7 @@ package com.schedule.vote.controller;
 
 import com.schedule.vote.model.Vote;
 import com.schedule.vote.service.VoteService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -24,5 +21,9 @@ public class VoteController {
     public Optional<Vote> getVote(@PathVariable Long id){
         return voteService.getVote(id);
 
+    }
+    @PostMapping("/insert")
+    public Vote createVote(Vote vote){
+        return voteService.createVote(vote);
     }
 }

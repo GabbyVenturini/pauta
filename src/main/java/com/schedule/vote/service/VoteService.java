@@ -10,11 +10,15 @@ public class VoteService {
 
     private VoteRepository voteRepository;
 
-    public VoteService(VoteRepository voteRepository) {
-        this.voteRepository = voteRepository;
+    public VoteService(VoteRepository voteRepository){
+    this.voteRepository = voteRepository;
     }
 
     public Optional<Vote> getVote(Long id) {
+
         return voteRepository.findById(id);
+    }
+    public Vote createVote(Vote vote){
+        return voteRepository.save(vote);
     }
 }

@@ -12,11 +12,13 @@ public class UserService {
     private UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
     public Optional<User> getUser(Long id) {
-    return userRepository.findById(id);
+
+        return userRepository.findById(id);
     }
 
     public User createUser(User user){
