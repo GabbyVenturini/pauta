@@ -12,12 +12,13 @@ public class ScheduleController{
 
     private ScheduleService scheduleService;
 
-    public ScheduleController(ScheduleService scheduleService) {this.scheduleService = scheduleService;}
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
+    }
 
     @GetMapping("/{id}")
     public Optional<Schedule> getSchedule(@PathVariable Long id){
         return scheduleService.getSchedule(id);
-
     }
 
     @PostMapping("/insert")
