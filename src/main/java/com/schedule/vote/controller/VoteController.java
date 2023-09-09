@@ -23,7 +23,7 @@ public class VoteController {
     }
 
     @PostMapping("/insert")
-    public Vote createVote(Vote vote) {
+    public Vote createVote(@RequestBody Vote vote) {
         return voteService.createVote(vote);
     }
 }
