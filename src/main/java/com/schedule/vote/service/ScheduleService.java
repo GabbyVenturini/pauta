@@ -10,18 +10,17 @@ import java.util.Optional;
 @Service
 public class ScheduleService {
 
-    private ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public ScheduleService(ScheduleRepository scheduleRepository) {
-
         this.scheduleRepository = scheduleRepository;
     }
 
-    public Optional<Schedule> getSchedule(Long id){
-        return scheduleRepository.findById(id); }
+    public Optional<Schedule> getSchedule(Long id) {
+        return scheduleRepository.findById(id);
+    }
 
-    public Schedule createSchedule(Schedule schedule){
-
+    public Schedule createSchedule(Schedule schedule) {
         return scheduleRepository.save(schedule);
     }
 }

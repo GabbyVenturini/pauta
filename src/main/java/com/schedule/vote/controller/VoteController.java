@@ -11,19 +11,19 @@ import java.util.Optional;
 @RequestMapping("/vote")
 public class VoteController {
 
-    private VoteService voteService;
+    private final VoteService voteService;
 
     public VoteController(VoteService voteService) {
         this.voteService = voteService;
     }
 
     @GetMapping("/{id}")
-    public Optional<Vote> getVote(@PathVariable Long id){
+    public Optional<Vote> getVote(@PathVariable Long id) {
         return voteService.getVote(id);
-
     }
+
     @PostMapping("/insert")
-    public Vote createVote(Vote vote){
+    public Vote createVote(Vote vote) {
         return voteService.createVote(vote);
     }
 }
