@@ -9,7 +9,7 @@ public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idScheduler;
+    private Long idSchedule;
     private Long idUser;
     private boolean vote;
 
@@ -21,12 +21,12 @@ public class Vote {
         this.id = id;
     }
 
-    public Long getIdScheduler() {
-        return idScheduler;
+    public Long getIdSchedule() {
+        return idSchedule;
     }
 
-    public void setIdScheduler(Long idScheduler) {
-        this.idScheduler = idScheduler;
+    public void setIdSchedule(Long idSchedule) {
+        this.idSchedule = idSchedule;
     }
 
     public Long getIdUser() {

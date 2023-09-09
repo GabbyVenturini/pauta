@@ -7,6 +7,7 @@ import java.util.Date;
 @Entity
 @Table(name = "PAUTA")
 public class Schedule {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
