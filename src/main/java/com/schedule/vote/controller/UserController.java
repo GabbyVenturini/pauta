@@ -10,19 +10,20 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable Long id){
+    public Optional<User> getUser(@PathVariable Long id) {
         return userService.getUser(id);
 
     }
+
     @PostMapping("/insert")
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody User user) {
         return userService.createUser(user);
     }
 }

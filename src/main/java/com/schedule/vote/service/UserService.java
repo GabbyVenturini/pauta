@@ -9,17 +9,17 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     public Optional<User> getUser(Long id) {
-    return userRepository.findById(id);
+        return userRepository.findById(id);
     }
 
-    public User createUser(User user){
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 }

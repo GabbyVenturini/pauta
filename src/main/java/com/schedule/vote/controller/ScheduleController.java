@@ -1,12 +1,9 @@
 package com.schedule.vote.controller;
 
+import com.schedule.vote.model.Schedule;
 import com.schedule.vote.model.User;
 import com.schedule.vote.service.ScheduleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
@@ -15,11 +12,17 @@ public class ScheduleController{
 
     private ScheduleService scheduleService;
 
-    public ScheduleController(ScheduleService scheduleService) {this.scheduleService = scheduleService;}
+    public ScheduleController(ScheduleService scheduleService) {
+        this.scheduleService = scheduleService;
+    }
 
     @GetMapping("/{id}")
-    public Optional<User> getSchedule(@PathVariable Long id){
+    public Optional<Schedule> getSchedule(@PathVariable Long id){
         return scheduleService.getSchedule(id);
+    }
 
+    @PostMapping("/insert")
+    public Schedule createSchedule(@RequestBody Schedule schedule){
+        return scheduleService.createSchedule(schedule);
     }
 }
