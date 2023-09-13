@@ -20,6 +20,10 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        return userRepository.save(user);
+        if (!user.getName().isEmpty()) {
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("Usuário inválido.");
+        }
     }
 }
