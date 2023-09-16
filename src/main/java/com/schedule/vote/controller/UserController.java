@@ -2,6 +2,8 @@ package com.schedule.vote.controller;
 
 import com.schedule.vote.model.User;
 import com.schedule.vote.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,9 +19,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUser(@PathVariable Long id) {
+    public User getUser(@PathVariable Long id) {
         return userService.getUser(id);
-
     }
 
     @PostMapping("/insert")
