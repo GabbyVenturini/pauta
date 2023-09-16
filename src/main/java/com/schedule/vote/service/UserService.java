@@ -2,9 +2,11 @@ package com.schedule.vote.service;
 
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
+import org.springframework.data.jpa.domain.AbstractPersistable_;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -17,9 +19,9 @@ public class UserService {
 
     public User getUser(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
-        }else{
+        } else {
             throw new RuntimeException("Usuario nao existe!");
         }
     }
@@ -29,6 +31,18 @@ public class UserService {
             return userRepository.save(user);
         } else {
             throw new RuntimeException("Usuário inválido.");
+        }
+    }
+
+    public User updateUser(Long id, User updateUSer) {
+        Optional<User> updateUser = userRepository.findById(id);
+        if (updateUser.isPresent()) {
+            return updateUSer;
+        }
+        if(!updateUser.isEmpty()) {
+            return updateUSer;
+        }else {
+            throw new RuntimeException("Usuário com ID" + id + "nao encontrado.");
         }
     }
 }
