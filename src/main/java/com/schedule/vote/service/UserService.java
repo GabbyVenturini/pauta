@@ -2,9 +2,9 @@ package com.schedule.vote.service;
 
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
-import org.springframework.data.jpa.domain.AbstractPersistable_;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -44,5 +44,9 @@ public class UserService {
         }else {
             throw new RuntimeException("Usuário com ID" + id + "nao encontrado.");
         }
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
