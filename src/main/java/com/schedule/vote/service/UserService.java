@@ -15,8 +15,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUser(Long id) {
-        return userRepository.findById(id);
+    public User getUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            return user.get();
+        }else{
+            throw new RuntimeException("Usuario nao existe!");
+        }
     }
 
     public User createUser(User user) {
