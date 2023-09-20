@@ -34,19 +34,17 @@ public class UserService {
         }
     }
 
-    public User updateUser(Long id, User updateUSer) {
+    public User updateUser(Long id, User newUser) {
         Optional<User> updateUser = userRepository.findById(id);
         if (updateUser.isPresent()) {
-            return updateUSer;
-        }
-        if(!updateUser.isEmpty()) {
-            return updateUSer;
-        }else {
-            throw new RuntimeException("Usuário com ID" + id + "nao encontrado.");
+            User user = updateUser.get();
+            user.setName(newUser.getName());
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("Usuário com ID" + updateUser.get().getId() + "nao encontrado.");
         }
     }
-
     public List<User> findAll() {
-        return userRepository.findAll();
+        return  userRepository.findAll();
     }
 }

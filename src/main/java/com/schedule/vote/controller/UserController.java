@@ -22,7 +22,7 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @GetMapping("/Users")
+    @GetMapping("/users")
     public List<User> findAll() {
         return userService.findAll();
     }
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public User UserController(@PathVariable Long id, @RequestBody User updateUser){
-        return userService.updateUser(id, updateUser);
+    public User updateUser(@PathVariable Long id, @RequestBody User newUser){
+        return userService.updateUser(id, newUser);
     }
 }
