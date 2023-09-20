@@ -9,4 +9,4 @@ public class VoteApplication {
         SpringApplication.run(VoteApplication.class, args);
     }
 
-}
+} 

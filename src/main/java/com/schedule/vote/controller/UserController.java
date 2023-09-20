@@ -2,17 +2,16 @@ package com.schedule.vote.controller;
 
 import com.schedule.vote.model.User;
 import com.schedule.vote.service.UserService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -23,8 +22,18 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @GetMapping("/users")
+    public List<User> findAll() {
+        return userService.findAll();
+    }
+
     @PostMapping("/insert")
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User newUser){
+        return userService.updateUser(id, newUser);
     }
 }

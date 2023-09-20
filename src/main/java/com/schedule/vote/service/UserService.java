@@ -4,7 +4,9 @@ import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -17,9 +19,9 @@ public class UserService {
 
     public User getUser(Long id) {
         Optional<User> user = userRepository.findById(id);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             return user.get();
-        }else{
+        } else {
             throw new RuntimeException("Usuario nao existe!");
         }
     }
@@ -30,5 +32,19 @@ public class UserService {
         } else {
             throw new RuntimeException("Usuário inválido.");
         }
+    }
+
+    public User updateUser(Long id, User newUser) {
+        Optional<User> updateUser = userRepository.findById(id);
+        if (updateUser.isPresent()) {
+            User user = updateUser.get();
+            user.setName(newUser.getName());
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("Usuário com ID" + updateUser.get().getId() + "nao encontrado.");
+        }
+    }
+    public List<User> findAll() {
+        return  userRepository.findAll();
     }
 }
