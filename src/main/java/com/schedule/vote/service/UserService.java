@@ -44,7 +44,8 @@ public class UserService {
             throw new RuntimeException("Usuário com ID" + updateUser.get().getId() + "nao encontrado.");
         }
     }
+
     public List<User> findAll() {
-        return  userRepository.findAll();
+        return userRepository.findAll();
     }
 }
