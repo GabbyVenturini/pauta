@@ -25,4 +25,10 @@ public class ScheduleController{
     public Schedule createSchedule(@RequestBody Schedule schedule){
         return scheduleService.createSchedule(schedule);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteSchedule(@PathVariable Long id){
+        scheduleService.deleteSchedule(id);
+    }
+
 }
