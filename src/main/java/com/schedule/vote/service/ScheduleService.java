@@ -16,8 +16,12 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
-    public Optional<Schedule> getSchedule(Long id) {
-        return scheduleRepository.findById(id);
+    public Schedule getSchedule(Long id) {
+        var schedule = scheduleRepository.findById(id);
+        if(schedule.isPresent()){
+            return schedule.get();
+        }
+        throw new RuntimeException("Pauta inexistente na base de dados.");
     }
 
     public Schedule createSchedule(Schedule schedule) {

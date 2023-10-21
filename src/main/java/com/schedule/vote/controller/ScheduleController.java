@@ -17,7 +17,7 @@ public class ScheduleController{
     }
 
     @GetMapping("/{id}")
-    public Optional<Schedule> getSchedule(@PathVariable Long id){
+    public Schedule getSchedule(@PathVariable Long id){
         return scheduleService.getSchedule(id);
     }
 
