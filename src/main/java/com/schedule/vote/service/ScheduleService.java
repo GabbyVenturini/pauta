@@ -18,7 +18,7 @@ public class ScheduleService {
 
     public Schedule getSchedule(Long id) {
         var schedule = scheduleRepository.findById(id);
-        if(schedule.isPresent()){
+        if (schedule.isPresent()) {
             return schedule.get();
         }
         throw new RuntimeException("Pauta inexistente na base de dados.");
@@ -28,7 +28,11 @@ public class ScheduleService {
         return scheduleRepository.save(schedule);
     }
 
-    public void deleteSchedule(Long id){
+    public Schedule insertSchedule(Schedule schedule) {
+        return scheduleRepository.save(schedule);
+    }
+
+    public void deleteSchedule(Long id) {
         scheduleRepository.deleteById(id);
     }
 }

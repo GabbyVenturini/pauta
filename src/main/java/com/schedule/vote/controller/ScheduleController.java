@@ -21,9 +21,14 @@ public class ScheduleController{
         return scheduleService.getSchedule(id);
     }
 
-    @PostMapping("/insert")
+    @PostMapping("/create")
     public Schedule createSchedule(@RequestBody Schedule schedule){
         return scheduleService.createSchedule(schedule);
+    }
+
+    @PostMapping("/insert")
+    public Schedule insertSchedule(@RequestBody Schedule schedule){
+        return scheduleService.insertSchedule(schedule);
     }
 
     @DeleteMapping("/{id}")
