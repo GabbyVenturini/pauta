@@ -1,5 +1,6 @@
 package com.schedule.vote.service;
 
+import com.schedule.vote.exceptions.BadRequestException;
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class UserService {
         if (!user.getName().isEmpty()) {
             return userRepository.save(user);
         } else {
-            throw new RuntimeException("Usuário inválido.");
+            throw new BadRequestException("Usuário inválido.");
         }
     }
 

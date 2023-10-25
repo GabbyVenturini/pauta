@@ -8,5 +8,4 @@ public class PautaApplication {
     public static void main(String[] args) {
         SpringApplication.run(PautaApplication.class, args);
     }
-
 } 
