@@ -3,6 +3,7 @@ package com.schedule.vote.service;
 import com.schedule.vote.exceptions.BadRequestException;
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class UserService {
         if (user.isPresent()) {
             return user.get();
         } else {
-            throw new RuntimeException("Usuario nao existe!");
+            throw new ObjectNotFoundException(id, User.class.getSimpleName());
         }
     }
 
@@ -42,7 +43,7 @@ public class UserService {
             user.setName(newUser.getName());
             return userRepository.save(user);
         } else {
-            throw new RuntimeException("Usuário com ID" + updateUser.get().getId() + "nao encontrado.");
+            throw new ObjectNotFoundException(id, User.class.getSimpleName());
         }
     }
 

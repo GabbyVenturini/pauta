@@ -1,10 +1,13 @@
 package com.schedule.vote.service;
 
+import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.ScheduleRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.io.ObjectStreamException;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +27,7 @@ public class ScheduleService {
         if (schedule.isPresent()) {
             return schedule.get();
         }
-        throw new RuntimeException("Pauta inexistente na base de dados.");
+        throw new ObjectNotFoundException(id, Schedule.class.getSimpleName());
     }
 
     public Schedule createSchedule(Schedule schedule) {
@@ -37,7 +40,7 @@ public class ScheduleService {
 
         if (scheduleResponse.isPresent()) {
             if (scheduleResponse.get().getDeadline() == null) {
-                if(schedule.getDeadline() != null) {
+                if (schedule.getDeadline() != null) {
                     scheduleResponse.get().setDeadline(schedule.getDeadline());
                 } else {
                     var newDeadLine = date.plusMinutes(1);
@@ -45,9 +48,9 @@ public class ScheduleService {
                 }
                 return scheduleRepository.save(scheduleResponse.get());
             }
-            throw new RuntimeException("Pauta fechada, impossível criar outra sessao.");
+            throw new ForbiddenException("Pauta fechada, impossível criar outra sessao.");
         }
-        throw new RuntimeException("Pauta nao encontrada no banco de dados.");
+        throw new ObjectNotFoundException(schedule.getId(), Schedule.class.getSimpleName());
     }
 
     public void deleteSchedule(Long id) {

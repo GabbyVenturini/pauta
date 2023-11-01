@@ -1,11 +1,13 @@
 package com.schedule.vote.exceptions;
 
+import java.time.LocalDateTime;
+
 public class ApiError {
     private int statusCode;
     private String error;
-    private Long timestamp;
+    private LocalDateTime timestamp;
 
-    public ApiError(int statusCode, String error, Long timestamp) {
+    public ApiError(int statusCode, String error, LocalDateTime timestamp) {
         this.statusCode = statusCode;
         this.error = error;
         this.timestamp = timestamp;
@@ -27,11 +29,11 @@ public class ApiError {
         this.error = error;
     }
 
-    public Long getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Long timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }
