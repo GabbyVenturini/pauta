@@ -2,6 +2,7 @@ package com.schedule.vote.service;
 
 import com.schedule.vote.model.Vote;
 import com.schedule.vote.repository.VoteRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,8 +16,13 @@ public class VoteService {
         this.voteRepository = voteRepository;
     }
 
-    public Optional<Vote> getVote(Long id) {
-        return voteRepository.findById(id);
+    public Vote getVote(Long id) {
+        var vote = voteRepository.findById(id);
+        if(vote.isPresent()){
+            return vote.get();
+        }else{
+            throw new ObjectNotFoundException(id, Vote.class.getSimpleName());
+        }
     }
 
     public Vote createVote(Vote vote) {
