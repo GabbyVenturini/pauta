@@ -18,7 +18,7 @@ public class VoteController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Vote> getVote(@PathVariable Long id) {
+    public Vote getVote(@PathVariable Long id) {
         return voteService.getVote(id);
     }
 
