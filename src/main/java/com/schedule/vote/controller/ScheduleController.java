@@ -1,5 +1,4 @@
 package com.schedule.vote.controller;
-
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ public class ScheduleController {
 
     @Autowired
     private ScheduleService scheduleService;
+
 
     @GetMapping("/{id}")
     public Schedule getSchedule(@PathVariable Long id) {

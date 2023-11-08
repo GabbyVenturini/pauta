@@ -5,8 +5,6 @@ import com.schedule.vote.model.Vote;
 import com.schedule.vote.service.VoteService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/vote")
 public class VoteController {

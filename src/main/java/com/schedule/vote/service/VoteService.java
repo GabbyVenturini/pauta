@@ -1,5 +1,6 @@
 package com.schedule.vote.service;
 
+import com.schedule.vote.exceptions.BadRequestException;
 import com.schedule.vote.model.Vote;
 import com.schedule.vote.repository.VoteRepository;
 import org.hibernate.ObjectNotFoundException;
@@ -26,6 +27,10 @@ public class VoteService {
     }
 
     public Vote createVote(Vote vote) {
-        return voteRepository.save(vote);
+        if(vote.getIdUser() != null && vote.getIdSchedule() != null) {
+            return voteRepository.save(vote);
+        }else{
+            throw new BadRequestException("Voto nao pode ser nulo.");
+        }
     }
 }
