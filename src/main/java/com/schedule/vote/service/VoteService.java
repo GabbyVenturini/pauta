@@ -27,10 +27,13 @@ public class VoteService {
     }
 
     public Vote createVote(Vote vote) {
-        if(vote.getIdUser() != null && vote.getIdSchedule() != null) {
+        if (vote.getIdSchedule() == null) {
+            throw new BadRequestException("Pauta incorreta.");
+        }
+        if (vote.getIdUser() == null) {
+            throw new BadRequestException("Usuário incorreto.");
+        } else {
             return voteRepository.save(vote);
-        }else{
-            throw new BadRequestException("Voto nao pode ser nulo.");
         }
     }
 }
