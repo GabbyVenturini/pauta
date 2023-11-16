@@ -11,6 +11,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,5 +33,16 @@ public class UserServiceTest {
         var result = userService.getUser(user.getId());
         then(result.getId()).isEqualTo(1L);
         then(result.getName()).isEqualTo("Gabby");
+    }
+
+    @Test
+    public void shouldCreateuser(){
+        var user = new User();
+        user.setId(1L);
+        user.setName("Gabby");
+
+        assertNotNull(user);
+        assertEquals(1L, user.getId());
+        assertEquals("Gabby", user.getName());
     }
 }
