@@ -31,6 +31,7 @@ public class UserServiceTest {
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
 
         var result = userService.getUser(user.getId());
+
         then(result.getId()).isEqualTo(1L);
         then(result.getName()).isEqualTo("Gabby");
     }
@@ -41,8 +42,12 @@ public class UserServiceTest {
         user.setId(1L);
         user.setName("Gabby");
 
+        given(userRepository.save(user)).willReturn(user);
+
+        User result = userService.createUser(user);
+
         assertNotNull(user);
-        assertEquals(1L, user.getId());
-        assertEquals("Gabby", user.getName());
+        assertEquals(1L, result.getId());
+        assertEquals("Gabby", result.getName());
     }
 }
