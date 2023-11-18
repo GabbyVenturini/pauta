@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -37,7 +38,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldCreateuser(){
+    public void shouldCreateUser(){
         var user = new User();
         user.setId(1L);
         user.setName("Gabby");
@@ -49,5 +50,43 @@ public class UserServiceTest {
         assertNotNull(user);
         assertEquals(1L, result.getId());
         assertEquals("Gabby", result.getName());
+    }
+
+    @Test
+    public void shouldUpdateUser(){
+        var user = new User();
+        user.setId(1L);
+        user.setName("Gabby");
+
+        var newUser = new User();
+        newUser.setId(1L);
+        newUser.setName("Gui");
+
+        given(userRepository.save(user)).willReturn(user);
+        given(userRepository.findById(user.getId())).willReturn(Optional.of(user));
+
+        User result = userService.updateUser(1L, newUser);
+
+        assertEquals(1L, result.getId());
+        assertEquals("Gui", result.getName());
+    }
+
+    @Test
+    public void shouldListUser(){
+        var userOne = new User();
+        userOne.setId(1L);
+        userOne.setName("Gabby");
+
+        var userTwo = new User();
+        userTwo.setId(2L);
+        userTwo.setName("Gui");
+
+        given(userRepository.findAll()).willReturn(List.of(userOne, userTwo));
+
+        var result = userService.findAll();
+
+        assertEquals(result.get(0).getId(),1L);
+        assertEquals(result.get(1).getId(), 2L);
+
     }
 }
