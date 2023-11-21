@@ -35,9 +35,9 @@ public class VoteServiceTest {
 
         var result = voteService.getVote(vote.getId());
 
-        then(result.getId()).equals(1L);
-        then(result.getIdUser()).equals(1L);
-        then(result.getIdSchedule()).equals(1L);
+        then(1L).equals(result.getId());
+        then(1L).equals(result.getIdUser());
+        then(1L).equals(result.getIdSchedule());
 
     }
 
@@ -50,7 +50,7 @@ public class VoteServiceTest {
 
         given(voteRepository.save(vote)).willReturn(vote);
 
-        Vote result = voteService.createVote(vote);
+        var result = voteService.createVote(vote);
 
         assertNotNull(vote);
         assertEquals(1L, result.getId());
