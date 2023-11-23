@@ -11,9 +11,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScheduleServiceTest {
@@ -26,26 +29,30 @@ public class ScheduleServiceTest {
 
     @Test
     public void shouldReturnSchedule() {
-        var schedule = new Schedule();
-        schedule.setId(1L);
-        schedule.setDeadline(LocalDateTime.parse("20-11-2023"));
-        schedule.setDescription("Pauta sobre lider.");
+        var schedule = mock(Schedule.class);
+        var date = LocalDateTime.now();
+
+        given(schedule.getId()).willReturn(1L);
+        given(schedule.getDeadline()).willReturn(date);
+        given(schedule.getDescription()).willReturn("Pauta sobre lider.");
 
         given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
 
         var result = scheduleService.getSchedule(schedule.getId());
 
         then(result.getId()).equals(1L);
-        then(result.getDeadline()).equals("20-11-2023");
+        then(result.getDeadline()).equals(date);
         then(result.getDescription()).equals("Pauta sobre lider.");
     }
 
     @Test
     public void shouldCreateSchedule() {
-        var schedule = new Schedule();
-        schedule.setId(1L);
-        schedule.setDeadline(LocalDateTime.parse("20-11-2023"));
-        schedule.setDescription("Pauta sobre lider.");
+        var schedule = mock(Schedule.class);
+        var date = LocalDateTime.now();
+
+        given(schedule.getId()).willReturn(1L);
+        given(schedule.getDeadline()).willReturn(date);
+        given(schedule.getDescription()).willReturn("Pauta sobre lider.");
 
         given(scheduleRepository.save(schedule)).willReturn(schedule);
 
@@ -53,19 +60,34 @@ public class ScheduleServiceTest {
 
         assertNotNull(schedule);
         assertEquals(1L, result.getId());
-        assertEquals("20-11-2023", result.getDeadline());
+        assertEquals(date, result.getDeadline());
         assertEquals("Pauta sobre lider.", result.getDescription());
     }
 
     @Test
-    public void shouldIsertSession(){
-        var schedule = new Schedule();
-        schedule.setId(1L);
-    }
+    public void shouldInsertSession(){
+        var schedule = mock(Schedule.class);
 
+        given(schedule.getId()).willReturn(1L);
+        given(schedule.getDescription()).willReturn("description");
+
+        given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
+        given(scheduleRepository.save(schedule)).willReturn(schedule);
+
+        var result = scheduleService.insertSession(schedule);
+
+        then(result.getId()).equals(1L);
+        then(result.getDeadline()).equals(LocalDateTime.now());
+        then(result.getDescription()).equals("description");
+    }
     @Test
-    public void shouldDeleteSession(){
-        var schedule = new Schedule();
-        schedule.setId(1L);
+    public void shouldDeleteSchedule(){
+        var schedule = mock(Schedule.class);
+
+        given(schedule.getId()).willReturn(1L);
+
+        scheduleService.deleteSchedule(schedule.getId());
+
+        verify(scheduleRepository).deleteById(schedule.getId());
     }
 }

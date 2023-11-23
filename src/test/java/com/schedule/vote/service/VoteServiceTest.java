@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VoteServiceTest {
@@ -26,10 +27,11 @@ public class VoteServiceTest {
 
     @Test
     public void shouldReturnVote() {
-        var vote = new Vote();
-        vote.setId(1L);
-        vote.setIdUser(1L);
-        vote.setIdSchedule(1L);
+        var vote = mock(Vote.class);
+
+        given(vote.getId()).willReturn(1L);
+        given(vote.getIdUser()).willReturn(1L);
+        given(vote.getIdSchedule()).willReturn(1L);
 
         given(voteRepository.findById(1L)).willReturn(Optional.of(vote));
 
@@ -43,10 +45,11 @@ public class VoteServiceTest {
 
     @Test
     public void shouldCreateVote() {
-        var vote = new Vote();
-        vote.setId(1L);
-        vote.setIdUser(1L);
-        vote.setIdSchedule(1L);
+        var vote = mock(Vote.class);
+
+        given(vote.getId()).willReturn(1L);
+        given(vote.getIdUser()).willReturn(1L);
+        given(vote.getIdSchedule()).willReturn(1L);
 
         given(voteRepository.save(vote)).willReturn(vote);
 

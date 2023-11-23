@@ -15,6 +15,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -25,9 +26,10 @@ public class UserServiceTest {
 
     @Test
     public void shouldReturnUser(){
-        var user = new User();
-        user.setId(1L);
-        user.setName("Gabby");
+        var user = mock(User.class);
+
+        given(user.getId()).willReturn(1L);
+        given(user.getName()).willReturn("Gabby");
 
         given(userRepository.findById(1L)).willReturn(Optional.of(user));
 
@@ -39,9 +41,10 @@ public class UserServiceTest {
 
     @Test
     public void shouldCreateUser(){
-        var user = new User();
-        user.setId(1L);
-        user.setName("Gabby");
+        var user = mock(User.class);
+
+        given(user.getId()).willReturn(1L);
+        given(user.getName()).willReturn("Gabby");
 
         given(userRepository.save(user)).willReturn(user);
 
@@ -54,39 +57,43 @@ public class UserServiceTest {
 
     @Test
     public void shouldUpdateUser(){
-        var user = new User();
-        user.setId(1L);
-        user.setName("Gabby");
+        var user = mock(User.class);
 
-        var newUser = new User();
-        newUser.setId(1L);
-        newUser.setName("Gui");
+        given(user.getId()).willReturn(1L);
+        given(user.getName()).willReturn("Gabby");
+
+        var newUser = mock(User.class);
+        given(user.getId()).willReturn(2L);
+        given(user.getName()).willReturn("Gui");
 
         given(userRepository.save(user)).willReturn(user);
         given(userRepository.findById(user.getId())).willReturn(Optional.of(user));
 
-        var result = userService.updateUser(1L, newUser);
+        var result = userService.updateUser(2L, newUser);
 
-        assertEquals(1L, result.getId());
+        assertEquals(2L, result.getId());
         assertEquals("Gui", result.getName());
     }
 
     @Test
-    public void shouldListUser(){
-        var userOne = new User();
-        userOne.setId(1L);
-        userOne.setName("Gabby");
+    public void shouldListUser() {
+        var userOne = mock(User.class);
+        given(userOne.getId()).willReturn(1L);
+        given(userOne.getName()).willReturn("Gabby");
 
-        var userTwo = new User();
-        userTwo.setId(2L);
-        userTwo.setName("Gui");
+        var userTwo = mock(User.class);
+        given(userTwo.getId()).willReturn(2L);
+        given(userTwo.getName()).willReturn("Gui");
 
         given(userRepository.findAll()).willReturn(List.of(userOne, userTwo));
 
         var result = userService.findAll();
 
-        assertEquals(result.get(0).getId(),1L);
-        assertEquals(result.get(1).getId(), 2L);
+        assertEquals(1L, result.get(0).getId());
+        assertEquals("Gabby", result.get(0).getName());
 
+        assertEquals(2L, result.get(1).getId());
+        assertEquals("Gui", result.get(1).getName());
     }
+
 }
