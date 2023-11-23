@@ -65,7 +65,7 @@ public class UserServiceTest {
         given(userRepository.save(user)).willReturn(user);
         given(userRepository.findById(user.getId())).willReturn(Optional.of(user));
 
-        User result = userService.updateUser(1L, newUser);
+        var result = userService.updateUser(1L, newUser);
 
         assertEquals(1L, result.getId());
         assertEquals("Gui", result.getName());
