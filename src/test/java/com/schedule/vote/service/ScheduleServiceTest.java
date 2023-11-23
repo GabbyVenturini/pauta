@@ -49,7 +49,7 @@ public class ScheduleServiceTest {
 
         given(scheduleRepository.save(schedule)).willReturn(schedule);
 
-        Schedule result = scheduleService.createSchedule(schedule);
+        var result = scheduleService.createSchedule(schedule);
 
         assertNotNull(schedule);
         assertEquals(1L, result.getId());
