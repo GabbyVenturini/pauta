@@ -2,6 +2,7 @@ package com.schedule.vote.service;
 
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
+import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,6 +12,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
@@ -65,7 +67,7 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    public void shouldInsertSession(){
+    public void shouldInsertSession() {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(1L);
@@ -80,8 +82,9 @@ public class ScheduleServiceTest {
         then(result.getDeadline()).equals(LocalDateTime.now());
         then(result.getDescription()).equals("description");
     }
+
     @Test
-    public void shouldDeleteSchedule(){
+    public void shouldDeleteSchedule() {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(1L);
@@ -90,4 +93,11 @@ public class ScheduleServiceTest {
 
         verify(scheduleRepository).deleteById(schedule.getId());
     }
+
+    @Test
+    public void shouldReturnErrorGetSchedule() {
+        thenThrownBy(() -> scheduleService.getSchedule(1L))
+                .isInstanceOf(ObjectNotFoundException.class);
+    }
+
 }
