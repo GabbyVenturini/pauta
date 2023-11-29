@@ -10,9 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,7 +33,7 @@ public class ScheduleServiceTest {
     @Test
     public void shouldReturnSchedule() {
         var schedule = mock(Schedule.class);
-        var date = LocalDateTime.now();
+        var date = now();
 
         given(schedule.getId()).willReturn(1L);
         given(schedule.getDeadline()).willReturn(date);
@@ -51,7 +51,7 @@ public class ScheduleServiceTest {
     @Test
     public void shouldCreateSchedule() {
         var schedule = mock(Schedule.class);
-        var date = LocalDateTime.now();
+        var date = now();
 
         given(schedule.getId()).willReturn(1L);
         given(schedule.getDeadline()).willReturn(date);
@@ -80,7 +80,7 @@ public class ScheduleServiceTest {
         var result = scheduleService.insertSession(schedule);
 
         then(result.getId()).equals(1L);
-        then(result.getDeadline()).equals(LocalDateTime.now());
+        then(result.getDeadline()).equals(now());
         then(result.getDescription()).equals("description");
     }
     @Test
@@ -105,11 +105,9 @@ public class ScheduleServiceTest {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(1L);
-        given(schedule.getDescription()).willReturn("Description");
-        given(schedule.getDeadline()).willReturn(null);
+        given(schedule.getDeadline()).willReturn(now());
 
         given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        given(scheduleRepository.save(schedule)).willReturn(schedule);
 
         thenThrownBy(()->scheduleService.insertSession(schedule))
                 .isInstanceOf(ForbiddenException.class);
