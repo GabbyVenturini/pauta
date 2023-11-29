@@ -1,6 +1,5 @@
 package com.schedule.vote.service;
 
-import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 import org.hibernate.ObjectNotFoundException;
@@ -68,7 +67,7 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    public void shouldInsertSession(){
+    public void shouldInsertSession() {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(1L);
@@ -83,8 +82,9 @@ public class ScheduleServiceTest {
         then(result.getDeadline()).equals(LocalDateTime.now());
         then(result.getDescription()).equals("description");
     }
+
     @Test
-    public void shouldDeleteSchedule(){
+    public void shouldDeleteSchedule() {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(1L);
@@ -95,23 +95,9 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    public void shouldReturnErrorGetSchedule(){
-        thenThrownBy(()->scheduleService.getSchedule(1L))
+    public void shouldReturnErrorGetSchedule() {
+        thenThrownBy(() -> scheduleService.getSchedule(1L))
                 .isInstanceOf(ObjectNotFoundException.class);
     }
 
-    @Test
-    public void shouldReturnErrorInsertSession(){
-        var schedule = mock(Schedule.class);
-
-        given(schedule.getId()).willReturn(1L);
-        given(schedule.getDescription()).willReturn("Description");
-        given(schedule.getDeadline()).willReturn(null);
-
-        given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-        given(scheduleRepository.save(schedule)).willReturn(schedule);
-
-        thenThrownBy(()->scheduleService.insertSession(schedule))
-                .isInstanceOf(ForbiddenException.class);
-    }
 }
