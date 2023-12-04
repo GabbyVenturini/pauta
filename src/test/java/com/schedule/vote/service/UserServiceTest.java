@@ -2,16 +2,18 @@ package com.schedule.vote.service;
 
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
+import org.hibernate.ObjectNotFoundException;
+import com.schedule.vote.exceptions.BadRequestException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
@@ -96,4 +98,23 @@ public class UserServiceTest {
         assertEquals("Gui", result.get(1).getName());
     }
 
+    @Test
+    public void shouldGetErrorUser(){
+        thenThrownBy(()-> userService.getUser(null))
+                .isInstanceOf(ObjectNotFoundException.class);
+    }
+
+    @Test
+    public void shouldCreateUserError(){
+        var user = mock(User.class);
+        given(user.getName()).willReturn("");
+        thenThrownBy(()-> userService.createUser(user))
+                .isInstanceOf(BadRequestException.class);
+    }
+
+    @Test
+    public void shouldUpdateUserError(){
+        thenThrownBy(()-> userService.updateUser(null, null))
+                .isInstanceOf(ObjectNotFoundException.class);
+    }
 }
