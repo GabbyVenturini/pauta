@@ -106,9 +106,13 @@ public class ScheduleServiceTest {
         var schedule = mock(Schedule.class);
         given(schedule.getId()).willReturn(1L);
 
-        thenThrownBy(() -> scheduleService.insertSession(null))
+        thenThrownBy(() -> scheduleService.insertSession(schedule))
                 .isInstanceOf(ForbiddenException.class);
     }
+
+    //TODO: Na função acima é a mesma coisa, qual cenário você está querendo testar? Antes de criar o teste, sempre validar o cenário primeiro.
+
+
 
     @Test
     public void shouldScheduleClosedError() {
@@ -116,6 +120,8 @@ public class ScheduleServiceTest {
         given(schedule.getId()).willReturn(1L);
 
         thenThrownBy(() -> scheduleService.getSchedule(null))
-                .isInstanceOf(ForbiddenException.class);
+                .isInstanceOf(ObjectNotFoundException.class);
     }
+
+    //TODO: No teste não entendi muito bem o cenário que você gostaria de testar shouldScheduleClosedError por que você está chamando o getSchedule, já consertei o teste, mas pd validar o cenário, algo de errado n está certo
 }
