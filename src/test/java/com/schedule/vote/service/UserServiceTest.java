@@ -80,10 +80,12 @@ public class UserServiceTest {
     @Test
     public void shouldListUser() {
         var userOne = mock(User.class);
+
         given(userOne.getId()).willReturn(1L);
         given(userOne.getName()).willReturn("Gabby");
 
         var userTwo = mock(User.class);
+
         given(userTwo.getId()).willReturn(2L);
         given(userTwo.getName()).willReturn("Gui");
 
@@ -100,6 +102,7 @@ public class UserServiceTest {
 
     @Test
     public void shouldGetErrorUser(){
+
         thenThrownBy(()-> userService.getUser(null))
                 .isInstanceOf(ObjectNotFoundException.class);
     }
@@ -107,13 +110,18 @@ public class UserServiceTest {
     @Test
     public void shouldCreateUserError(){
         var user = mock(User.class);
+
         given(user.getName()).willReturn("");
+
+        given(userRepository.save(user)).willReturn(user);
+
         thenThrownBy(()-> userService.createUser(user))
                 .isInstanceOf(BadRequestException.class);
     }
 
     @Test
     public void shouldUpdateUserError(){
+
         thenThrownBy(()-> userService.updateUser(null, null))
                 .isInstanceOf(ObjectNotFoundException.class);
     }

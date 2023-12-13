@@ -67,7 +67,9 @@ public class VoteServiceTest {
     @Test
     public void shouldGetVoteError(){
         var vote = mock(Vote.class);
+
         given(vote.getId()).willReturn(1L);
+
         thenThrownBy(()-> voteService.getVote(1L))
                 .isInstanceOf(ObjectNotFoundException.class);
     }
@@ -75,15 +77,17 @@ public class VoteServiceTest {
     @Test
     public void shouldCreateVoteScheduleError(){
         var vote = mock(Vote.class);
+
         given(vote.getIdSchedule()).willReturn(null);
 
         thenThrownBy(()->voteService.createVote(vote))
                 .isInstanceOf(BadRequestException.class);
-
     }
+
     @Test
     public void shouldCreateUserVoteError(){
         var vote = mock(Vote.class);
+
         given(vote.getIdUser()).willReturn(null);
 
         thenThrownBy(()->voteService.createVote(vote))
