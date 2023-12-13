@@ -96,7 +96,7 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    public void shouldGetScheduleError() {
+    public void shouldSearchScheduleError() {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(null);
