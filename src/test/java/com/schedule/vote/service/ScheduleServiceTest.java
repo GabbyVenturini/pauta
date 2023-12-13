@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static java.time.LocalDateTime.now;
@@ -81,7 +80,7 @@ public class ScheduleServiceTest {
         var result = scheduleService.insertSession(schedule);
 
         then(result.getId()).equals(1L);
-        then(result.getDeadline()).equals(LocalDateTime.now());
+        then(result.getDeadline()).equals(now());
         then(result.getDescription()).equals("description");
     }
 
@@ -97,21 +96,24 @@ public class ScheduleServiceTest {
     }
 
     @Test
-    public void shouldReturnErrorGetSchedule() {
-        thenThrownBy(() -> scheduleService.getSchedule(1L))
+    public void shouldSearchScheduleError() {
+        var schedule = mock(Schedule.class);
+
+        given(schedule.getId()).willReturn(null);
+
+        thenThrownBy(() -> scheduleService.getSchedule(schedule.getId()))
                 .isInstanceOf(ObjectNotFoundException.class);
     }
 
     @Test
-    public void shouldReturnErrorInsertSession(){
+    public void shouldInsertSessionError() {
         var schedule = mock(Schedule.class);
 
         given(schedule.getId()).willReturn(1L);
         given(schedule.getDeadline()).willReturn(now());
-
         given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
 
-        thenThrownBy(()->scheduleService.insertSession(schedule))
+        thenThrownBy(() -> scheduleService.insertSession(schedule))
                 .isInstanceOf(ForbiddenException.class);
     }
 }

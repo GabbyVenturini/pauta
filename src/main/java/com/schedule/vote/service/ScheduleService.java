@@ -1,17 +1,14 @@
 package com.schedule.vote.service;
 
+import static java.time.LocalDateTime.now;
+
 import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
-import com.schedule.vote.model.User;
 import com.schedule.vote.repository.ScheduleRepository;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.stereotype.Service;
 
-import java.io.ObjectStreamException;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
+import org.hibernate.ObjectNotFoundException;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class ScheduleService {
@@ -35,12 +32,15 @@ public class ScheduleService {
     }
 
     public Schedule insertSession(Schedule schedule) {
-        Optional<Schedule> scheduleResponse = scheduleRepository.findById(schedule.getId());
-        var date = LocalDateTime.now();
+        var scheduleResponse = scheduleRepository.findById(schedule.getId());
+        var date = now();
 
         if (scheduleResponse.isPresent()) {
+            //TODO: QUEBRAR EM UMA FUNÇÃO A PARTE A VALIDAÇÃO PARA VERIFICAR SE A PAUTA É PRESENTE.
             if (scheduleResponse.get().getDeadline() == null) {
+                //TODO: QUEBRAR EM UMA OUTRA FUNÇÃO A PARTE DE VERIFICAR SE O PRAZO DA PAUTA DO BANCO DE DADOS É NULO.
                 if (schedule.getDeadline() != null) {
+                    //TODO: QUEBRAR EM UMA OUTRA FUNÇÃO A PARTE DE VERIFICAR SE O PRAZO DA PAUTA É NULO.
                     scheduleResponse.get().setDeadline(schedule.getDeadline());
                 } else {
                     var newDeadLine = date.plusMinutes(1);
