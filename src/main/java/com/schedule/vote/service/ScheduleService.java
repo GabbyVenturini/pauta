@@ -6,18 +6,16 @@ import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 
+import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
-
-    public ScheduleService(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
-    }
 
     public Schedule getSchedule(Long id) {
         var schedule = scheduleRepository.findById(id);
