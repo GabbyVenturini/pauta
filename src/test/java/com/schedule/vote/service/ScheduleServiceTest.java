@@ -2,6 +2,7 @@ package com.schedule.vote.service;
 
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
+import com.schedule.vote.validation.ScheduleValidator;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,8 @@ public class ScheduleServiceTest {
 
     @Mock
     private ScheduleRepository scheduleRepository;
+    @Mock
+    private ScheduleValidator scheduleValidator;
 
     @InjectMocks
     private ScheduleService scheduleService;

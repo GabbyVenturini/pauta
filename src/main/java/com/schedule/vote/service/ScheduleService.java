@@ -1,21 +1,20 @@
 package com.schedule.vote.service;
 
-import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
+import com.schedule.vote.validation.ScheduleValidator;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static java.time.LocalDateTime.now;
 
 @Service
 public class ScheduleService {
 
-    private final ScheduleRepository scheduleRepository;
-
-    public ScheduleService(ScheduleRepository scheduleRepository) {
-        this.scheduleRepository = scheduleRepository;
-    }
+    @Autowired
+    private ScheduleRepository scheduleRepository;
+    @Autowired
+    private ScheduleValidator validator;
 
     public Schedule getSchedule(Long id) {
         var schedule = scheduleRepository.findById(id);
@@ -37,37 +36,11 @@ public class ScheduleService {
         var scheduleResponse = scheduleRepository.findById(schedule.getId());
 
         if (scheduleResponse.isPresent()) {
-            checkIfDeadlineIsNull(schedule);
-            checkIfDeadlineIsDifferentFromNull(schedule);
+            validator.checkIfDeadlineIsNull(schedule);
+            validator.checkIfDeadlineIsDifferentFromNull(schedule);
             return scheduleRepository.save(scheduleResponse.get());
         } else {
             throw new ObjectNotFoundException(schedule.getId(), Schedule.class.getSimpleName());
         }
-    }
-
-    public Schedule checkIfDeadlineIsNull(Schedule schedule) {
-        var scheduleResponse = scheduleRepository.findById(schedule.getId());
-        var date = now();
-
-        if (scheduleResponse.get().getDeadline() == null) {
-            scheduleResponse.get().setDeadline(schedule.getDeadline());
-        } else {
-            var newDeadLine = date.plusMinutes(1);
-            scheduleResponse.get().setDeadline(newDeadLine);
-        }
-        throw new ForbiddenException("Pauta fechada, impossível criar outra sessao.");
-    }
-
-    public Schedule checkIfDeadlineIsDifferentFromNull(Schedule schedule) {
-        var scheduleResponse = scheduleRepository.findById(schedule.getId());
-        var date = now();
-
-        if (schedule.getDeadline() != null) {
-            scheduleResponse.get().setDeadline(schedule.getDeadline());
-        } else {
-            var newDeadLine = date.plusMinutes(1);
-            scheduleResponse.get().setDeadline(newDeadLine);
-        }
-        throw new ForbiddenException("Pauta fechada, impossível criar outra sessao.");
     }
 }
