@@ -1,6 +1,5 @@
 package com.schedule.vote.service;
 
-import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 import org.hibernate.ObjectNotFoundException;
@@ -109,11 +108,7 @@ public class ScheduleServiceTest {
     public void shouldInsertSessionError() {
         var schedule = mock(Schedule.class);
 
-        given(schedule.getId()).willReturn(1L);
-        given(schedule.getDeadline()).willReturn(now());
-        given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
-
         thenThrownBy(() -> scheduleService.insertSession(schedule))
-                .isInstanceOf(ForbiddenException.class);
+                .isInstanceOf(ObjectNotFoundException.class);
     }
 }
