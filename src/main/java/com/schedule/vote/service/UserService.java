@@ -20,7 +20,7 @@ public class UserService {
     }
 
     public User getUser(Long id) {
-        Optional<User> user = userRepository.findById(id);
+        var user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
         } else {
@@ -37,9 +37,9 @@ public class UserService {
     }
 
     public User updateUser(Long id, User newUser) {
-        Optional<User> updateUser = userRepository.findById(id);
+        var updateUser = userRepository.findById(id);
         if (updateUser.isPresent()) {
-            User user = updateUser.get();
+            var user = updateUser.get();
             user.setName(newUser.getName());
             return userRepository.save(user);
         } else {
@@ -48,6 +48,7 @@ public class UserService {
     }
 
     public List<User> findAll() {
+        //TODO: IMPLEMENTAR LÓGICA PARA RETORNAR UM ERRO SE NÃO EXISTIR USUÁRIOS NA BASE DE DADOS.
         return userRepository.findAll();
     }
 }
