@@ -7,7 +7,6 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -48,7 +47,10 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        //TODO: IMPLEMENTAR LÓGICA PARA RETORNAR UM ERRO SE NÃO EXISTIR USUÁRIOS NA BASE DE DADOS.
-        return userRepository.findAll();
+        var users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new BadRequestException("Nenhum usuário encontrado na base de dados");
+        }
+        return users;
     }
 }

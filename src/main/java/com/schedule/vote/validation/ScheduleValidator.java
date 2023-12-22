@@ -1,12 +1,12 @@
 package com.schedule.vote.validation;
 
-import static java.time.LocalDateTime.now;
-
 import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static java.time.LocalDateTime.now;
 
 public class ScheduleValidator {
 
