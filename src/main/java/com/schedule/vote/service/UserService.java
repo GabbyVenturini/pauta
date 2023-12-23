@@ -3,6 +3,7 @@ package com.schedule.vote.service;
 import com.schedule.vote.exceptions.BadRequestException;
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +11,10 @@ import java.util.List;
 
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public User getUser(Long id) {
         var user = userRepository.findById(id);
