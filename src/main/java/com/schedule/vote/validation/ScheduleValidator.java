@@ -4,14 +4,16 @@ import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static java.time.LocalDateTime.now;
 
 public class ScheduleValidator {
 
-  @Autowired
-  private ScheduleRepository scheduleRepository;
+  private final ScheduleRepository scheduleRepository;
+
+  public ScheduleValidator(ScheduleRepository scheduleRepository) {
+    this.scheduleRepository = scheduleRepository;
+  }
 
   public Schedule checkIfDeadlineIsNull(Schedule schedule) {
     var scheduleResponse = scheduleRepository.findById(schedule.getId());
