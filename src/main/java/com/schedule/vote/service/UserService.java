@@ -8,7 +8,6 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -18,7 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public User getUser(Long id) {
-        Optional<User> user = userRepository.findById(id);
+        var user = userRepository.findById(id);
         if (user.isPresent()) {
             return user.get();
         } else {
@@ -35,9 +34,9 @@ public class UserService {
     }
 
     public User updateUser(Long id, User newUser) {
-        Optional<User> updateUser = userRepository.findById(id);
+        var updateUser = userRepository.findById(id);
         if (updateUser.isPresent()) {
-            User user = updateUser.get();
+            var user = updateUser.get();
             user.setName(newUser.getName());
             return userRepository.save(user);
         } else {
@@ -46,6 +45,10 @@ public class UserService {
     }
 
     public List<User> findAll() {
-        return userRepository.findAll();
+        var users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new BadRequestException("Nenhum usuário encontrado na base de dados");
+        }
+        return users;
     }
 }
