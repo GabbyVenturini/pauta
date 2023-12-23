@@ -4,9 +4,11 @@ import com.schedule.vote.exceptions.ForbiddenException;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 import static java.time.LocalDateTime.now;
 
+@Service
 public class ScheduleValidator {
 
   private final ScheduleRepository scheduleRepository;
