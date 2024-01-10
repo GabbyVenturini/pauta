@@ -3,17 +3,17 @@ package com.schedule.vote.service;
 import com.schedule.vote.model.Schedule;
 import com.schedule.vote.repository.ScheduleRepository;
 import com.schedule.vote.validation.ScheduleValidator;
+import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@AllArgsConstructor
 public class ScheduleService {
 
-    @Autowired
     private ScheduleRepository scheduleRepository;
-    @Autowired
+
     private ScheduleValidator validator;
 
     public Schedule getSchedule(Long id) {
