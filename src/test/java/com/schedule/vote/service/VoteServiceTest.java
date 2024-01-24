@@ -66,9 +66,6 @@ public class VoteServiceTest {
 
     @Test
     public void shouldGetVoteError(){
-        var vote = mock(Vote.class);
-
-        given(vote.getId()).willReturn(1L);
 
         thenThrownBy(()-> voteService.getVote(1L))
                 .isInstanceOf(ObjectNotFoundException.class);

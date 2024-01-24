@@ -113,8 +113,6 @@ public class UserServiceTest {
 
         given(user.getName()).willReturn("");
 
-        given(userRepository.save(user)).willReturn(user);
-
         thenThrownBy(()-> userService.createUser(user))
                 .isInstanceOf(BadRequestException.class);
     }
