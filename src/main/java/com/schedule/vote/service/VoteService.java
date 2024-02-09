@@ -39,32 +39,31 @@ public class VoteService {
         }
     }
 
-    public ResultVotation getResult(Long idSchedule){
+    public ResultVotation getResult(Long idSchedule) {
         var votes = voteRepository.findByIdSchedule(idSchedule);
         var schedule = scheduleRepository.findById(idSchedule);
-        var date = LocalDateTime.now();
+        var dateTime = LocalDateTime.now();
 
-        if(date.isBefore(schedule.get().getDeadline())){
-            throw new ForbiddenException("Votacao em andamento.");
+        if (dateTime.isBefore(schedule.get().getDeadline())) {
+            throw new ForbiddenException("Votação em andamento.");
         }
-
         var yes = 0;
         var no = 0;
         var result = "resultado";
 
-        for(Vote vote : votes){
-            if(vote.isVote()){
+        for (Vote vote : votes) {
+            if (vote.isVote()) {
                 yes++;
-            }else{
+            } else {
                 no++;
             }
         }
-        if(yes > no){
-            result = "Schedule approved";
-        }else{
-            result =  "Schedule disaproved";
-        }
-        return new ResultVotation(idSchedule, yes, no, result);
+
+        var resultMessage = (yes > no) ? "Schedule approved" : "Schedule disapproved";
+
+        return new ResultVotation(idSchedule, yes, no, resultMessage);
     }
 }
+
+
 
