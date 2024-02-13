@@ -122,7 +122,7 @@ public class VoteServiceTest {
     }
 
     @Test
-    public void shouldReturnVotingResultFalce() {
+    public void shouldReturnVotingResultFalse() {
         var voteFalse = mock(Vote.class);
         var schedule = mock(Schedule.class);
 
@@ -131,10 +131,10 @@ public class VoteServiceTest {
         given(schedule.getDeadline()).willReturn(LocalDateTime.now());
         given(schedule.getId()).willReturn(1L);
 
-        given(scheduleRepository.findById(1L)).willReturn(Optional.ofNullable(schedule));
-        given(voteRepository.findByIdSchedule(voteFalse.getIdSchedule())).willReturn(List.of(voteFalse));
+        given(scheduleRepository.findById(1L)).willReturn(Optional.of(schedule));
+        given(voteRepository.findByIdSchedule(schedule.getId())).willReturn(List.of(voteFalse));
 
-        var resultVotation = voteService.getResult(voteFalse.getIdSchedule());
+        var resultVotation = voteService.getResult(schedule.getId());
 
         assertEquals(1L, resultVotation.getScheduleId());
         assertEquals(0, resultVotation.getYes());
