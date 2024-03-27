@@ -1,14 +1,17 @@
 package com.schedule.vote.service;
 
+import com.schedule.vote.dto.user.InUser;
+import com.schedule.vote.exceptions.BadRequestException;
+import com.schedule.vote.mapper.UserMapper;
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
 import org.hibernate.ObjectNotFoundException;
-import com.schedule.vote.exceptions.BadRequestException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -44,17 +47,18 @@ public class UserServiceTest {
     @Test
     public void shouldCreateUser(){
         var user = mock(User.class);
+        var outUser = mock(UserMapper.class);
 
         given(user.getId()).willReturn(1L);
         given(user.getName()).willReturn("Gabby");
 
         given(userRepository.save(user)).willReturn(user);
 
-        User result = userService.createUser(user);
+        UserMapper result = (UserMapper) userService.createUser((InUser) outUser);
 
         assertNotNull(user);
-        assertEquals(1L, result.getId());
-        assertEquals("Gabby", result.getName());
+        assertEquals(1L, result.transformaUserParaOutUser(user));
+        assertEquals("Gabby", result.transformaUserParaOutUser(user));
     }
 
     @Test
@@ -110,10 +114,11 @@ public class UserServiceTest {
     @Test
     public void shouldCreateUserError(){
         var user = mock(User.class);
+        var inUser = mock(UserMapper.class);
 
         given(user.getName()).willReturn("");
 
-        thenThrownBy(()-> userService.createUser(user))
+        thenThrownBy(()-> userService.createUser((InUser) inUser))
                 .isInstanceOf(BadRequestException.class);
     }
 
