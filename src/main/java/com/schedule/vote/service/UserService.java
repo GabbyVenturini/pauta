@@ -1,6 +1,9 @@
 package com.schedule.vote.service;
 
+import com.schedule.vote.dto.user.InUser;
+import com.schedule.vote.dto.user.OutUser;
 import com.schedule.vote.exceptions.BadRequestException;
+import com.schedule.vote.mapper.UserMapper;
 import com.schedule.vote.model.User;
 import com.schedule.vote.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +19,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserMapper userMapper;
+
     public User getUser(Long id) {
         var user = userRepository.findById(id);
         if (user.isPresent()) {
@@ -25,9 +30,13 @@ public class UserService {
         }
     }
 
-    public User createUser(User user) {
+    public OutUser createUser(InUser inUser) {
+        var user = userMapper.transformaInUserParaUser(inUser);
+
         if (!user.getName().isEmpty()) {
-            return userRepository.save(user);
+            var userSaved = userRepository.save(user);
+
+            return userMapper.transformaUserParaOutUser(userSaved);
         } else {
             throw new BadRequestException("Usuário inválido.");
         }
