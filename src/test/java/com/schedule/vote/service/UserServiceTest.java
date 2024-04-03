@@ -1,6 +1,7 @@
 package com.schedule.vote.service;
 
 import com.schedule.vote.dto.user.InUser;
+import com.schedule.vote.dto.user.OutUser;
 import com.schedule.vote.exceptions.BadRequestException;
 import com.schedule.vote.mapper.UserMapper;
 import com.schedule.vote.model.User;
@@ -26,6 +27,8 @@ import static org.mockito.Mockito.mock;
 public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private UserMapper userMapper;
     @InjectMocks
     private UserService userService;
 
@@ -46,19 +49,23 @@ public class UserServiceTest {
 
     @Test
     public void shouldCreateUser(){
+        var inUser = mock(InUser.class);
+        var outUser = mock(OutUser.class);
         var user = mock(User.class);
-        var outUser = mock(UserMapper.class);
 
-        given(user.getId()).willReturn(1L);
+        given(outUser.getId()).willReturn(1L);
+        given(outUser.getName()).willReturn("Gabby");
         given(user.getName()).willReturn("Gabby");
+        given(userMapper.transformaInUserParaUser(inUser)).willReturn(user);
+        given(userMapper.transformaUserParaOutUser(user)).willReturn(outUser);
 
         given(userRepository.save(user)).willReturn(user);
 
-        UserMapper result = (UserMapper) userService.createUser((InUser) outUser);
+        var result = userService.createUser(inUser);
 
-        assertNotNull(user);
-        assertEquals(1L, result.transformaUserParaOutUser(user));
-        assertEquals("Gabby", result.transformaUserParaOutUser(user));
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        assertEquals("Gabby", result.getName());
     }
 
     @Test
@@ -114,11 +121,12 @@ public class UserServiceTest {
     @Test
     public void shouldCreateUserError(){
         var user = mock(User.class);
-        var inUser = mock(UserMapper.class);
+        var inUser = mock(InUser.class);
 
         given(user.getName()).willReturn("");
+        given(userMapper.transformaInUserParaUser(inUser)).willReturn(user);
 
-        thenThrownBy(()-> userService.createUser((InUser) inUser))
+        thenThrownBy(()-> userService.createUser(inUser))
                 .isInstanceOf(BadRequestException.class);
     }
 
