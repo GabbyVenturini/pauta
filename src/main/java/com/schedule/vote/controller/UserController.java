@@ -1,5 +1,7 @@
 package com.schedule.vote.controller;
 
+import com.schedule.vote.dto.user.InUser;
+import com.schedule.vote.dto.user.OutUser;
 import com.schedule.vote.model.User;
 import com.schedule.vote.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +29,8 @@ public class UserController {
     }
 
     @PostMapping("/insert")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public OutUser createUser(@RequestBody InUser inUser) {
+        return userService.createUser(inUser);
     }
 
     @PutMapping("/{id}")
